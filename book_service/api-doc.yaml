@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: GreatReads Book Service API
+  description: API for managing user reading lists and reading progress
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3002
+
+paths:
+  /api/books/reading:
+    post:
+      summary: Add a book to user's reading list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                bookId:
+                  type: string
+                progress:
+                  type: integer
+                status:
+                  type: string
+                  example: reading
+      responses:
+        "201":
+          description: Book added successfully
+
+  /api/books/reading/{userId}:
+    get:
+      summary: Get user's reading list
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of books
