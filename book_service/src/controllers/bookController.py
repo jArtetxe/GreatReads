@@ -1,0 +1,31 @@
+from flask import jsonify
+from src.models.book import mongo
+
+def add_book(user_data, data):
+    if not data.get("bookId"):
+        return jsonify({"message": "bookId is required"}), 400
+
+    book = {
+        "userId": user_data["id"], 
+        "bookId": data["bookId"],
+        "progress": data.get("progress", 0),
+        "status": data.get("status", "reading"),
+    }
+
+    try:
+        mongo.db.reading_list.insert_one(book)
+    except Exception as e:
+        return jsonify({"message": f"Error inserting book: {str(e)}"}), 500
+
+    return jsonify({"message": "Book added"}), 201
+
+def get_books(user_data):
+    try:
+        books = list(mongo.db.reading_list.find(
+            {"userId": user_data["id"]},
+            {"_id": 0}
+        ))
+    except Exception as e:
+        return jsonify({"message": f"Error fetching books: {str(e)}"}), 500
+
+    return jsonify(books), 200
