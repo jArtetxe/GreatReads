@@ -41,7 +41,6 @@ app.post("/api/users/login", async (req, res) => {
   }
 });
 
-// Book routes
 app.post("/api/books/reading", async (req, res) => {
   try {
     const response = await axios.post(
@@ -66,17 +65,27 @@ app.get("/api/books/reading", async (req, res) => {
     const response = await axios.get(
       "http://localhost:3002/api/books/reading",
       {
-        headers: {
-          Authorization: req.headers.authorization,
-        },
+        headers: { Authorization: req.headers.authorization }
       }
     );
     res.status(response.status).json(response.data);
   } catch (err) {
-    res.status(err.response?.status || 500).json(
-      err.response?.data || { error: err.message }
-    );
+    res.status(err.response?.status || 500).json(err.response?.data || { error: err.message });
   }
 });
+
+app.get("/api/books/search", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3002/api/books/search?q=${encodeURIComponent(req.query.q)}`,
+      { headers: { Authorization: req.headers.authorization } }
+    );
+    res.status(response.status).json(response.data);
+  } catch (err) {
+    res.status(err.response?.status || 500).json(err.response?.data || { error: err.message });
+  }
+});
+
+
 
 app.listen(3000, () => console.log("Gateway running on port 3000"));
