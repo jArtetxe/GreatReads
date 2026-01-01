@@ -63,8 +63,6 @@ paths:
     get:
       summary: Buscar libros en Google Books
       tags: [Books]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: q
@@ -179,6 +177,85 @@ paths:
           description: Unauthorized
         "500":
           description: Internal server error
+
+  /api/books/{bookId}:
+    get:
+      summary: Obtener detalle de un libro por ID
+      tags: [Books]
+      parameters:
+        - in: path
+          name: bookId
+          required: true
+          schema:
+            type: string
+          description: ID del libro en Google Books
+      responses:
+        "200":
+          description: Detalle completo del libro
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  authors:
+                    type: array
+                    items:
+                      type: string
+                  description:
+                    type: string
+                  publisher:
+                    type: string
+                  publishedDate:
+                    type: string
+                  pageCount:
+                    type: integer
+                  categories:
+                    type: array
+                    items:
+                      type: string
+                  language:
+                    type: string
+                  thumbnail:
+                    type: string
+        "500":
+          description: Internal server error
+          
+  /api/books/{bookId}/status:
+    get:
+      summary: Obtener estado y progreso de un libro para el usuario
+      tags: [Books]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: bookId
+          required: true
+          schema:
+            type: string
+          description: ID del libro en Google Books
+      responses:
+        "200":
+          description: Estado y progreso del libro
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Leyendo
+                  progress:
+                    type: integer
+                    example: 45
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+
 
 
 components:

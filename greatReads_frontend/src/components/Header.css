@@ -1,0 +1,101 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 64px;
+  padding: 0 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  cursor: pointer;
+  letter-spacing: -0.3px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+
+.nav-link {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1;
+}
+
+.nav-link:hover {
+  color: #111827;
+}
+
+.login-btn {
+  height: 36px;
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.login-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.logout-btn {
+  height: 36px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: normal;
+  color: #374151;
+  
+  align-self: center;
+  margin: 0;
+}
+
+.logout-btn:hover {
+  background-color: #f3f4f6;
+}

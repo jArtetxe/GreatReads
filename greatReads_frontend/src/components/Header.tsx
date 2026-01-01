@@ -1,28 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
+import "./Header.css";
 
-const Header = () => {
+export default function Header() {
   const { token, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
-    <header style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
-      <nav style={{ display: "flex", gap: "1rem" }}>
-        <Link to="/">Home</Link>
+    <header className="header">
+      <div className="header-container">
+        <div className="header-left">
+          <span className="logo" onClick={() => navigate("/")}>
+            GreatReads
+          </span>
+        </div>
 
-        {token ? (
-          <>
-            <Link to="/books">My Books</Link>
-            <button onClick={logout}>Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-          </>
-        )}
-      </nav>
+        <nav className="header-right">
+          {token ? (
+            <>
+              <Link to="/reading-list" className="nav-link">
+                My Books
+              </Link>
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="login-btn">
+              Login
+            </Link>
+          )}
+        </nav>
+      </div>
     </header>
   );
-};
-
-export default Header;
+}
