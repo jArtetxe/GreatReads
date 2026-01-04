@@ -1,0 +1,77 @@
+.reading-list-page {
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.filter-buttons button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.filter-buttons button.active,
+.filter-buttons button:hover {
+  background: #007bff;
+  color: white;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.book-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.book-thumb {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+.authors {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  background: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 20px;
+  margin-top: 0.5rem;
+}
+
+.progress-fill {
+  background: linear-gradient(135deg, #28a745, #1dc24e);
+  height: 100%;
+  color: white;
+  font-size: 0.75rem;
+  line-height: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}

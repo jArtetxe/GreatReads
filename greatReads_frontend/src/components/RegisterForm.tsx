@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../api/client";
+import "./AuthForms.css";
 
 export default function RegisterForm() {
   const [username, setUsername] = useState("");
@@ -15,9 +17,7 @@ export default function RegisterForm() {
 
     try {
       await api.post("/users/register", { username, email, password });
-
       setSuccess("User registered successfully");
-
       setUsername("");
       setEmail("");
       setPassword("");
@@ -27,35 +27,41 @@ export default function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
+    <div className="auth-container">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h2>Register</h2>
 
-      <input
-        placeholder="Name"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
+        <input
+          placeholder="Name"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
+        <input
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-      <button type="submit">Register</button>
+        <button type="submit">Register</button>
 
-      {success && <p style={{ color: "green" }}>{success}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+        {success && <p className="success">{success}</p>}
+        {error && <p className="error">{error}</p>}
+
+        <p className="switch-auth">
+          Already have an account? <Link to="/login">Login here</Link>
+        </p>
+      </form>
+    </div>
   );
 }

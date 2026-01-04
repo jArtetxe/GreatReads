@@ -1,0 +1,145 @@
+GreatReads
+==========
+
+GreatReads es una aplicación web para buscar libros, gestionar tu lista de lectura y hacer seguimiento del progreso de lectura.
+
+0) Software que se necesita instalar
+-----------------------------------
+- Node.js (v18 o superior recomendado)
+- npm (v9 o superior, normalmente viene con Node.js)
+- Python (v3.9 o superior)
+- pip
+- MongoDB (para Book Service)  
+- MySQL (para User Service)  
+- Navegador web moderno (Chrome, Firefox, Edge, etc.)
+
+⚠️ Nota para usuarios de Windows: Para que los scripts de Python y NPM funcionen correctamente en PowerShell, es posible que necesites permitir la ejecución de scripts. Ejecuta **una vez** como administrador:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Esto permitirá activar entornos virtuales y ejecutar scripts necesarios.
+
+
+1) Servicios que hay que arrancar
+---------------------------------
+El proyecto está dividido en cuatro servicios:
+
+1. Frontend (frontend)
+   - Aplicación React
+   - Puerto: 5173
+   - URL: http://localhost:5173/
+
+2. Gateway (gateway)
+   - Servidor que hace de intermediario entre frontend y microservicios
+   - Puerto: 3000
+
+3. User Service (user_service)
+   - Gestión de usuarios, login y registro
+   - Puerto: 3001
+
+4. Book Service (book_service)
+   - Gestión de libros y progreso de lectura
+   - Puerto: 3002
+
+Nota: Todos los servicios deben estar corriendo para que la aplicación funcione correctamente.
+
+
+2) Variables de entorno y bases de datos
+---------------------------------------
+
+Cada servicio necesita un archivo `.env` en su carpeta raíz con las variables de entorno correctas.
+**⚠️ Importante:** Los valores mostrados aquí son **ejemplos**. Es necesario modificar `DB_USER` y `DB_PASS` en `user_service/.env` según la configuración de tu base de datos.
+
+**Book Service (book_service/.env):**
+```
+PORT=3002
+MONGO_URI=mongodb://localhost:27017/greatreads_books
+JWT_SECRET=supersecret
+```
+
+**User Service (user_service/.env):**
+```
+PORT=3001
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=root
+DB_NAME=greatreads_users_db
+JWT_SECRET=supersecret
+```
+
+**Gateway (gateway/.env):**
+```
+PORT=3000
+```
+
+⚠️ Nota sobre las bases de datos:
+
+- **MongoDB** para Book Service debe estar corriendo en `localhost:27017`. Crea la base de datos `greatreads_books` si no existe.  
+- **MySQL** o similar para User Service debe estar corriendo en `DB_HOST` (localhost). Crea la base de datos `greatreads_users_db` antes de iniciar el servicio y asegúrate de que el usuario y la contraseña (`DB_USER` y `DB_PASS`) tengan permisos sobre ella.
+
+Si no configuras estos `.env` y las bases de datos, los servicios **no arrancarán correctamente**.
+
+
+3) Dependencias que hay que instalar
+------------------------------------
+Frontend:
+    cd frontend
+    npm install
+
+Gateway (Node.js):
+    cd gateway
+    npm install
+
+User Service (Node.js):
+    cd user_service
+    python -m venv venv
+    venv\Scripts\activate
+    npm install
+
+Book Service (Python + Flask):
+    cd book_service
+    python -m venv venv        
+    venv\Scripts\activate     
+    pip install flask-pymongo
+    pip install requests
+    pip install PyJWT
+    pip install -r requirements.txt
+
+
+4) Cómo arrancar la parte servidora
+-----------------------------------
+Cada servicio se arranca en una terminal independiente:
+
+User Service:
+    cd user_service
+    venv\Scripts\activate 
+    npm start
+
+Book Service:
+    cd book_service
+    venv\Scripts\activate      
+    python app.py              
+
+Gateway:
+    cd gateway
+    npm start
+
+Nota: Asegúrate de que los puertos 3000, 3001 y 3002 estén libres.
+
+
+5) Cómo acceder a la parte cliente
+----------------------------------
+Frontend:
+    cd greatReads_frontend
+    npm run dev
+
+Abrir el navegador en:
+    http://localhost:5173/
+
+Desde ahí podrás:
+- Buscar libros
+- Registrarte o iniciar sesión
+- Consultar y actualizar tu lista de lectura
+- Ver detalles de los libros

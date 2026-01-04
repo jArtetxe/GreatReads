@@ -3,3 +3,8 @@ flask-cors
 pymongo
 python-dotenv
 flask-swagger-ui
+flask-pymongo
+requests
+PyJWT
+
+
