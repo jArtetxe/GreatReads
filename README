@@ -85,7 +85,7 @@ Si no configuras estos `.env` y las bases de datos, los servicios **no arrancar√
 3) Dependencias que hay que instalar
 ------------------------------------
 Frontend:
-    cd frontend
+    cd greatReads_frontend
     npm install
 
 Gateway (Node.js):

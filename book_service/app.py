@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from src.models.book import mongo
+from src.models.Book import mongo
 from src.routes.book_routes import book_bp
 from src.middlewares.auth import token_required
 import os

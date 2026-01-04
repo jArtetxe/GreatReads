@@ -1,5 +1,5 @@
 from flask import jsonify
-from src.models.book import mongo
+from src.models.Book import mongo
 import requests
 
 def get_best_image(image_links: dict):
