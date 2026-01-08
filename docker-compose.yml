@@ -1,0 +1,63 @@
+services:
+
+  frontend:
+    build: ./greatReads_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - gateway
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./gateway/.env
+    depends_on:
+      - user_service
+      - book_service
+
+  user_service:
+    build: ./user_service
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./user_service/.env
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+
+  book_service:
+    build: ./book_service
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./book_service/.env
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: greatreads_users_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+volumes:
+  mongo_data:
+  mysql_data:

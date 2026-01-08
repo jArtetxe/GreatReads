@@ -43,9 +43,10 @@ export default function ReadingListPage() {
   const filteredBooks =
     filter === "All" ? books : books.filter((b) => b.status === filter);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-  if (books.length === 0) return <p>No books in your list.</p>;
+  if (loading) return <p className="page-message">Loading...</p>;
+  if (error) return <p className="page-message error">{error}</p>;
+  if (books.length === 0) return <p className="page-message">No books in your list.</p>;
+  
 
   return (
     <div className="reading-list-page">

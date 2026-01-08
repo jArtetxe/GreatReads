@@ -15,7 +15,9 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.post("/api/users/register", async (req, res) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/users/register",
+      // "http://localhost:3001/api/users/register",
+      // req.body
+      "http://user_service:3001/api/users/register",
       req.body
     );
     res.status(response.status).json(response.data);
@@ -29,7 +31,9 @@ app.post("/api/users/register", async (req, res) => {
 app.post("/api/users/login", async (req, res) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/users/login",
+      // "http://localhost:3001/api/users/login",
+      // req.body
+      "http://user_service:3001/api/users/login",
       req.body
     );
     res.status(response.status).json(response.data);
@@ -43,7 +47,9 @@ app.post("/api/users/login", async (req, res) => {
 app.post("/api/books/reading", async (req, res) => {
   try {
     const response = await axios.post(
-      "http://localhost:3002/api/books/reading",
+      // "http://localhost:3002/api/books/reading",
+      // req.body,
+      "http://book_service:3002/api/books/reading",
       req.body,
       {
         headers: {
@@ -62,7 +68,8 @@ app.post("/api/books/reading", async (req, res) => {
 app.get("/api/books/reading", async (req, res) => {
   try {
     const response = await axios.get(
-      "http://localhost:3002/api/books/reading",
+      // "http://localhost:3002/api/books/reading",
+      "http://book_service:3002/api/books/reading",
       {
         headers: { Authorization: req.headers.authorization }
       }
@@ -76,7 +83,8 @@ app.get("/api/books/reading", async (req, res) => {
 app.get("/api/books/search", async (req, res) => {
   try {
     const response = await axios.get(
-      `http://localhost:3002/api/books/search?q=${encodeURIComponent(req.query.q)}`
+      // `http://localhost:3002/api/books/search?q=${encodeURIComponent(req.query.q)}`
+      `http://book_service:3002/api/books/search?q=${encodeURIComponent(req.query.q)}`
     );
     res.status(response.status).json(response.data);
   } catch (err) {
@@ -91,7 +99,8 @@ app.get("/api/books/:bookId", async (req, res) => {
     const { bookId } = req.params;
 
     const response = await axios.get(
-      `http://localhost:3002/api/books/${bookId}`
+      // `http://localhost:3002/api/books/${bookId}`
+      `http://book_service:3002/api/books/${bookId}`
     );
 
     res.status(response.status).json(response.data);
@@ -105,12 +114,35 @@ app.get("/api/books/:bookId", async (req, res) => {
 app.get("/api/books/:bookId/status", async (req, res) => {
   try {
     const { bookId } = req.params;
-    const response = await axios.get(`http://localhost:3002/api/books/${bookId}/status`, {
+    // const response = await axios.get(`http://localhost:3002/api/books/${bookId}/status`, 
+    const response = await axios.get(`http://book_service:3002/api/books/${bookId}/status`, 
+    {
       headers: { Authorization: req.headers.authorization }
     });
     res.status(response.status).json(response.data);
   } catch (err) {
     res.status(err.response?.status || 500).json(err.response?.data || { error: err.message });
+  }
+});
+
+app.delete("/api/books/reading/:bookId", async (req, res) => {
+  try {
+    const { bookId } = req.params;
+
+    const response = await axios.delete(
+      `http://book_service:3002/api/books/reading/${bookId}`,
+      {
+        headers: {
+          Authorization: req.headers.authorization
+        }
+      }
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (err) {
+    res.status(err.response?.status || 500).json(
+      err.response?.data || { error: err.message }
+    );
   }
 });
 

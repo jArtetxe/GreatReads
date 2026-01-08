@@ -146,3 +146,19 @@ def get_book_status(user_data, book_id):
         }
     except Exception as e:
         return {"status": "", "progress": 0, "error": str(e)}
+
+def delete_book(user_data, book_id):
+    try:
+        result = mongo.db.reading_list.delete_one({
+            "userId": user_data["id"],
+            "bookId": book_id
+        })
+
+        if result.deleted_count == 0:
+            return jsonify({"message": "Book not found in list"}), 404
+
+        return jsonify({"message": "Book deleted"}), 200
+
+    except Exception as e:
+        return jsonify({"message": f"Error deleting book: {str(e)}"}), 500
+

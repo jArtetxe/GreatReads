@@ -75,3 +75,17 @@
   font-weight: 600;
   color: #333;
 }
+
+.page-message {
+  margin: 3rem auto;
+  padding: 1rem;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.05rem;
+  color: #555;
+}
+
+.page-message.error {
+  color: #dc3545;
+  font-weight: 600;
+}

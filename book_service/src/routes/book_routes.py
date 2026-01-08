@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.controllers.bookController import add_book, get_books, search_books, get_book_by_id, get_book_status
+from src.controllers.bookController import add_book, get_books, search_books, get_book_by_id, get_book_status, delete_book
 from src.middlewares.auth import token_required
 
 book_bp = Blueprint("books", __name__)
@@ -35,3 +35,9 @@ def get_book_detail(book_id):
 def get_book_status_route(user_data, book_id):
     status = get_book_status(user_data, book_id)
     return jsonify(status), 200
+
+@book_bp.route("/api/books/reading/<book_id>", methods=["DELETE"])
+@token_required
+def delete_book_route(user_data, book_id):
+    return delete_book(user_data, book_id)
+

@@ -113,19 +113,6 @@
   color: white;
 }
 
-button.update-progress-btn {
-  margin-top: 1rem;
-  padding: 0.7rem 1.6rem;
-  border: none;
-  border-radius: 50px;
-  background: linear-gradient(135deg, #28a745, #1dc24e);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
-}
-
 button.update-progress-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
@@ -214,6 +201,27 @@ button.update-progress-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
+
+.delete-book-btn {
+  margin-top: 1rem;
+  padding: 0.7rem 1.6rem;      
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #dc3545, #b71c1c);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;             
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);  
+}
+
+.delete-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+
 
 @media (max-width: 768px) {
   .book-detail-container {

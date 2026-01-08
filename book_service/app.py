@@ -17,4 +17,5 @@ mongo.init_app(app)
 app.register_blueprint(book_bp)
 
 if __name__ == "__main__":
-    app.run(port=3002, debug=True)
+    # app.run(port=3002, debug=True)
+    app.run(host="0.0.0.0", port=3002, debug=True)

@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/client";
 import "./BookDetailPage.css";
+
 
 interface BookDetail {
   id: string;
@@ -37,6 +38,7 @@ export default function BookDetailPage() {
   const [showProgressPopup, setShowProgressPopup] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const STATUS_OPTIONS = ["Quiero leer", "Leyendo", "Leído"];
 
@@ -45,7 +47,6 @@ export default function BookDetailPage() {
 
     const fetchBook = async () => {
       try {
-        // Obtener detalles del libro
         const res = await api.get(`/books/${id}`);
         const bookData = res.data;
 
@@ -92,6 +93,14 @@ export default function BookDetailPage() {
   const handleSelectStatus = async (newStatus: string) => {
     if (!book) return;
 
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Debes iniciar sesión para añadir libros a tu lista");
+      navigate("/login");
+      return;
+    }
+    
     try {
       await api.post("/books/reading", {
         bookId: book.id,
@@ -132,6 +141,30 @@ export default function BookDetailPage() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   if (!book) return <p>Book not found</p>;
+
+  const handleDeleteBook = async () => {
+    if (!book) return;
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Debes iniciar sesión para gestionar tu lista");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await api.delete(`/books/reading/${book.id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      alert("Libro eliminado de tu lista");
+      setStatus("");
+    } catch (err) {
+      console.error(err);
+      alert("Error al eliminar el libro");
+    }
+  };
 
   return (
     <div className="book-detail-page">
@@ -200,6 +233,12 @@ export default function BookDetailPage() {
               Actualizar progreso ({book.progress || 0}%)
             </button>
           )}
+
+          {status !== "" && (
+            <button className="delete-book-btn" onClick={handleDeleteBook}>
+              Eliminar de mi lista
+            </button>
+        )}
 
           {showProgressPopup && (
             <div className={`popup ${showProgressPopup ? "show" : ""}`}>
